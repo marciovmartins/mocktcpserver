@@ -23,8 +23,10 @@ public class MockTcpServerTest {
 
         // executions
         MockTcpServer server = new MockTcpServer(portNumber)
-                .when(request().withBody(requestData))
-                .respond(response().withBody(responseData));
+                .when(
+                        request().withBody(requestData),
+                        response().withBody(responseData)
+                );
 
         Socket socket = new Socket(hostName, server.getPortNumber());
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -45,8 +47,10 @@ public class MockTcpServerTest {
 
         // executions
         MockTcpServer server = new MockTcpServer(portNumber)
-                .when(request().withBody(requestData))
-                .respond(response().withBody(responseData));
+                .when(
+                        request().withBody(requestData),
+                        response().withBody(responseData)
+                );
 
         Socket socket = new Socket(hostName, server.getPortNumber());
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);

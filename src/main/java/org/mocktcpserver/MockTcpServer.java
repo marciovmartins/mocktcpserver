@@ -40,12 +40,8 @@ public class MockTcpServer implements Closeable {
         serverSocket.close();
     }
 
-    public MockTcpServer when(Request request) {
+    public MockTcpServer when(Request request, Response response) {
         this.request = request;
-        return this;
-    }
-
-    public MockTcpServer respond(Response response) {
         this.response = response;
         return this;
     }
