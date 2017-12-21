@@ -15,6 +15,24 @@ public class MockTcpServer implements Closeable {
     @SuppressWarnings("WeakerAccess")
     public MockTcpServer(int portNumber) throws IOException {
         serverSocket = new ServerSocket(portNumber);
+        new Thread(() -> {
+            try {
+                Socket clientSocket = serverSocket.accept();
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    if (inputLine.equals(request.body())) {
+                        out.println(response.body());
+                    } else {
+                        out.println();
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -39,27 +57,5 @@ public class MockTcpServer implements Closeable {
 
     public int getPortNumber() {
         return this.serverSocket.getLocalPort();
-    }
-
-    public MockTcpServer start() {
-        new Thread(() -> {
-            try {
-                Socket clientSocket = serverSocket.accept();
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    if (inputLine.equals(request.body())) {
-                        out.println(response.body());
-                    } else {
-                        out.println();
-                    }
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-        return this;
     }
 }
