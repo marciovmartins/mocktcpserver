@@ -22,8 +22,8 @@
         </license>
     </licenses>
 
-    <groupId>org.mock-tcp-server</groupId>
-    <artifactId>mocktcpserver-core</artifactId>
+    <groupId>com.github.marciovmartins</groupId>
+    <artifactId>mocktcpserver</artifactId>
     <version>0.1</version>
     <packaging>jar</packaging>
 
