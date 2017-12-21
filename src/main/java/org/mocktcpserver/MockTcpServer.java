@@ -52,6 +52,8 @@ public class MockTcpServer implements Closeable {
                 while ((inputLine = in.readLine()) != null) {
                     if (inputLine.equals(request.body())) {
                         out.println(response.body());
+                    } else {
+                        out.println();
                     }
                 }
             } catch (IOException e) {
